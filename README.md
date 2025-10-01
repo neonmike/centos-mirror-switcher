@@ -4,9 +4,17 @@ centos-mirror-switcher.sh 专门为了Centos 脚本实现的脚本，用于解�
 
 ## 使用方法
 
+**海外用户**
+
 ```bash
+bash <(curl -sL https://raw.githubusercontent.com/neonmike/centos-mirror-switcher/main/centos-mirror-switcher.sh)
 
 ```
+**国内用户**
+```bash
+bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main/centos-mirror-switcher.sh) 
+```
+
 
 ## 脚本支持
 
