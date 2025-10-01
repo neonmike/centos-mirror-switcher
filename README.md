@@ -44,7 +44,3 @@ Centos 现在已经很少见到这个包，关键是没有这个对应的依赖�
 **为什么不支持的 Centos steam 系列**
 
 CentOS Stream 9 需要手动来更新：https://mirrors.tuna.tsinghua.edu.cn/help/centos-stream/
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=neonmike/centos-mirror-switcher&type=Date)](https://www.star-history.com/#neonmike/centos-mirror-switcher&Date)
