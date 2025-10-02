@@ -45,15 +45,14 @@ sys_check() {
 update_centos_othplat() {
 	if [[ "$1" == "centos" && "$2" == "8" ]]; then
 		sed -e "s|^mirrorlist=|#mirrorlist=|g" \
-			-e "s|^#baseurl=http://mirror.centos.org/altarch/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g" \
-			-e "s|^#baseurl=http://mirror.centos.org/$contentdir/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/centos/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/8.5.2111|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/8.5.2111|g" \
 			-i.bak \
 			/etc/yum.repos.d/CentOS-*.repo
 	elif [[ "$1" == "centos" && "$2" == "7" ]]; then
 		cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 		curl -fSL -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-altarch-7.repo
 	else
-
 		echo " update centos failed ,Centos $1 ,version : $2 "
 	fi
 }
