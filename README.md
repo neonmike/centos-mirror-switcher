@@ -45,6 +45,6 @@ bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main
 
 Centos 现在已经很少见到这个包，关键是没有这个对应的依赖库
 
-**为什么不支持的 Centos steam 系列**
+**为什么不支持的 Centos steam 8**
 
-CentOS Stream 9 需要手动来更新：https://mirrors.tuna.tsinghua.edu.cn/help/centos-stream/
+CentOS Stream 8 没有发现依赖镜像地址
