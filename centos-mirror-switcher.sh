@@ -12,6 +12,8 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
+set -e
+PS4='+$LINENO:'
 
 os_name="UnknownOS"
 os_version="UnknownVersion"
@@ -23,7 +25,7 @@ sys_check() {
 		. /etc/os-release # 读取系统发行版信息
 		os_name=${ID}
 		os_version=${VERSION_ID}
-	elif [ -e /etc/centos-release ]; then
+	elif [ -e /etc/redhat-release ]; then
 		result=$(sed -r 's/^(CentOS).*release ([0-9]+).*/\1 \2/' /etc/redhat-release)
 		os_name=${result%% *}    # 第一个空格前的部分
 		os_version=${result##* } # 最后一个空格后的部分
@@ -73,12 +75,12 @@ update_centos_x86() {
 			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/6.10|g" \
 			-i.bak \
 			/etc/yum.repos.d/CentOS-*.repo
-	elif [[ "$1" == "centos" && "$2" == "5" ]]; then
+	elif [[ "$1" == "CentOS" && "$2" == "5" ]]; then
 		sed -e "s|^mirrorlist=|#mirrorlist=|g" \
-			-e "s|^#baseurl=http://mirror.centos.org/centos/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11|g" \
-			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/centos/\$releasever|baseurl=http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11|g" \
 			-i.bak \
-			/etc/yum.repos.d/CentOS-*.repo
+			/etc/yum.repos.d/CentOS-*.repo /etc/yum.repos.d/libselinux.repo
 	else
 		echo "only support x86_64 centos 6/7/8 version , fail udpate centos software source "
 	fi
