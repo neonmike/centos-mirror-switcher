@@ -21,21 +21,23 @@ sys_check() {
 	echo "权限检查......................................."
 	if [ -e /etc/os-release ]; then
 		. /etc/os-release # 读取系统发行版信息
+		os_name=${ID}
+		os_version=${VERSION_ID}
+	elif [ -e /etc/centos-release ]; then
+		result=$(sed -r 's/^(CentOS).*release ([0-9]+).*/\1 \2/' /etc/redhat-release)
+		os_name=${result%% *}    # 第一个空格前的部分
+		os_version=${result##* } # 最后一个空格后的部分
 	fi
 	# 权限检查：确保用户是 root 或具有 sudo 权限
-	echo "检测系统名称：${ID},系统版本：${VERSION_ID}..........."
-	if [ "$(id -u)" -ne 0 ] && ! sudo -v >/dev/null 2>&1; then
-		echo "请切换为具有 sudo 权限的用户来开启脚本"
-		exit 1
-	fi
-	os_name=${ID}
-	os_version=${VERSION_ID}
 	if [[ "$os_name" == "UnknownOS" || "$os_version" == "UnknownVersion" ]]; then
 		echo "Unknown OS detected: os_name=$os_name, os_version=$os_version. Script exiting with status 1."
 		exit 1
 	fi
-	echo "just for Centos maintain china sofeware source "
-	echo "System_OS:${os_name} ;System_version:${os_version} ;"
+	echo "检测系统名称：${os_name},系统版本：${os_version}..........."
+	if [ "$(id -u)" -ne 0 ] && ! sudo -v >/dev/null 2>&1; then
+		echo "请切换为具有 sudo 权限的用户来开启脚本"
+		exit 1
+	fi
 }
 # 提供对其他平台的源地址更新
 update_centos_othplat() {
@@ -64,7 +66,7 @@ update_centos_x86() {
 			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/8.5.2111|g" \
 			-i.bak \
 			/etc/yum.repos.d/CentOS-*.repo
-	elif [[ "$1" == "centos" && "$2" == "6" ]]; then
+	elif [[ "$1" == "CentOS" && "$2" == "6" ]]; then
 		#  Centos 6
 		sed -e "s|^mirrorlist=|#mirrorlist=|g" \
 			-e "s|^#baseurl=http://mirror.centos.org/centos/\$releasever|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-vault/6.10|g" \
@@ -83,6 +85,7 @@ update_centos_x86() {
 }
 
 update_centos() {
+
 	if [[ "$1" == "x86_64" ]]; then
 		update_centos_x86 "$2" "$3"
 	else
