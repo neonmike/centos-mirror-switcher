@@ -36,7 +36,7 @@ sys_check() {
 		exit 1
 	fi
 	echo "检测系统名称：${os_name},系统版本：${os_version}..........."
-	if [ "$(id -u)" -ne 0 ] && ! sudo -v >/dev/null 2>&1; then
+	if [ "$(id -u)" -ne 0 ]; then
 		echo "请切换为具有 sudo 权限的用户来开启脚本"
 		exit 1
 	fi
