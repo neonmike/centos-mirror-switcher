@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/build-passing-green)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neonmike/centos-mirror-switcher/blank.yml)
 ![Static Badge](https://img.shields.io/badge/version-0.1-blue)
 
 
