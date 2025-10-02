@@ -43,13 +43,17 @@ sys_check() {
 }
 # 提供对其他平台的源地址更新
 update_centos_othplat() {
-	if [[ "$1" == "centos" && ("$2" == "7" || "$2" == "8") ]]; then
-		sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-			-e 's|^#baseurl=http://mirror.centos.org/altarch/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g' \
-			-e 's|^#baseurl=http://mirror.centos.org/$contentdir/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g' \
+	if [[ "$1" == "centos" && "$2" == "8" ]]; then
+		sed -e "s|^mirrorlist=|#mirrorlist=|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/altarch/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g" \
+			-e "s|^#baseurl=http://mirror.centos.org/$contentdir/|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-altarch/|g" \
 			-i.bak \
 			/etc/yum.repos.d/CentOS-*.repo
-		eles
+	elif [[ "$1" == "centos" && "$2" == "7" ]]; then
+		cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+		curl -fSL -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-altarch-7.repo
+	else
+
 		echo " update centos failed ,Centos $1 ,version : $2 "
 	fi
 }

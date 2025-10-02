@@ -22,10 +22,9 @@ bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main
 
 ## 脚本支持
 
--   x86_32 脚本不支持(centos 很少见了)
-- 支持 x86_64 centos 5/6/7/8 主流支持
+- x86_32 脚本不支持(centos 很少见了)
+- 支持 x86_64 centos 5/6/7/8 主流支持(centos 5 可能存在不稳定情况)
 - 其他平台altarch的：centos 6/7
-
 
 ## 项目依赖
 
