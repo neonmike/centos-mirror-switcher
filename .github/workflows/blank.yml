@@ -15,6 +15,12 @@ jobs:
         # 定义版本和架构组合
         os: [5, 6, 7, 8]
         arch: [x86_64, arm64]
+         # 排除不合法组合
+    exclude:
+      - os: 5
+        arch: arm64
+      - os: 6
+        arch: arm64
       fail-fast: false
 
     steps:
