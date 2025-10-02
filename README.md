@@ -27,7 +27,10 @@ bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main
 - 支持 x86_64 centos stream 9
 ## 项目依赖
 
-- 依赖的镜像地址：https://mirrors.tuna.tsinghua.edu.cn/
+- 依赖的镜像地址：
+    清华：https://mirrors.tuna.tsinghua.edu.cn/
+    阿里：https://developer.aliyun.com/mirror/
+    腾讯：https://mirrors.tencent.com/
 
 ## 进展
 
