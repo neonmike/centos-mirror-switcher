@@ -1,6 +1,5 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neonmike/centos-mirror-switcher/blank.yml)
-![Static Badge](https://img.shields.io/badge/version-0.1-blue)
-
+![GitHub Release](https://img.shields.io/github/v/release/neonmike/centos-mirror-switcher)
 
 # centos-mirror-switcher
 
