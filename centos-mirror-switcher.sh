@@ -41,6 +41,55 @@ sys_check() {
 		exit 1
 	fi
 }
+set_stream9() {
+	mirrors="https://mirrors.tuna.tsinghua.edu.cn/centos-stream"
+	if [ $# -lt 1 ]; then
+		echo "Usage: $0 <filename1> <filename2> ..." >&2
+		exit 1
+	fi
+	for filename in "$@"; do
+		backup_filename="${filename}.bak"
+		mv "$filename" "$backup_filename"
+
+		# 创建新文件
+		>"$filename"
+
+		while IFS= read -r line; do
+			# 注释掉 metalink 开头的行
+			if [[ "$line" =~ ^metalink ]]; then
+				echo "# $line" >>"$filename"
+				continue
+			fi
+
+			# 如果是 name 行，追加 baseurl
+			if [[ "$line" =~ ^name ]]; then
+				# 拆分 name-xxx-arch
+				IFS="-" read -r _ repo arch <<<"$line"
+
+				repo=$(echo "$repo" | xargs) # 去空格
+				arch=$(echo "${arch:-}" | tr '[:upper:]' '[:lower:]' | xargs)
+
+				if [[ "$repo" =~ ^Extras ]]; then
+					if [[ "$arch" == "source" ]]; then
+						line="$line"$'\n'"baseurl=${mirrors}/SIGs/\$releasever-stream/extras/${arch}/extras-common"
+					else
+						line="$line"$'\n'"baseurl=${mirrors}/SIGs/\$releasever-stream/extras/\$basearch/extras-common"
+					fi
+				else
+					if [[ "$arch" == "source" ]]; then
+						line="$line"$'\n'"baseurl=${mirrors}/\$releasever-stream/${repo}/"
+					elif [[ -n "$arch" ]]; then
+						line="$line"$'\n'"baseurl=${mirrors}/\$releasever-stream/${repo}/\$basearch/${arch}/tree/"
+					else
+						line="$line"$'\n'"baseurl=${mirrors}/\$releasever-stream/${repo}/\$basearch/os"
+					fi
+				fi
+			fi
+			echo "$line" >>"$filename"
+		done <"$backup_filename"
+	done
+
+}
 # 提供对其他平台的源地址更新
 update_centos_othplat() {
 	if [[ "$1" == "centos" && "$2" == "8" ]]; then
@@ -84,6 +133,8 @@ update_centos_x86() {
 			-e "s|^#baseurl=http://mirror.centos.org/\$contentdir/\$releasever|baseurl=http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11|g" \
 			-i.bak \
 			/etc/yum.repos.d/CentOS-*.repo /etc/yum.repos.d/libselinux.repo
+	elif [[ "$1" == "centos" && "$2" == "9" ]]; then
+		set_stream9 /etc/yum.repos.d/centos*.repo
 	else
 		echo "only support x86_64 centos 6/7/8 version , fail udpate centos software source "
 	fi
