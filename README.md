@@ -24,7 +24,7 @@ bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main
 - x86_32 脚本不支持(centos 很少见了)
 - 支持 x86_64 centos 5/6/7/8 主流支持
 - 其他平台 arm64 的：centos 6/7
-
+- 支持 x86_64 centos stream 9
 ## 项目依赖
 
 - 依赖的镜像地址：https://mirrors.tuna.tsinghua.edu.cn/
