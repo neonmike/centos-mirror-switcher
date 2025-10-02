@@ -40,17 +40,22 @@ jobs:
             - name: Run centos-mirror-switcher.sh
               run: |
                   # 生成 CentOS 镜像标签
-                  IMAGE_TAG="centos:${{ matrix.os }}"
+                    if [ "${{ matrix.os }}" == "9" ]; then
+                      IMAGE_TAG="quay.io/centos/centos:stream9"
+                    else
+                      IMAGE_TAG="centos:${{ matrix.os }}"
+                    fi
+                  # IMAGE_TAG="centos:${{ matrix.os }}"
 
-                  if [ "${{ matrix.arch }}" == "arm64" ]; then
-                    PLATFORM="linux/arm64"
-                  else
-                    PLATFORM="linux/amd64"
-                  fi
+                    if [ "${{ matrix.arch }}" == "arm64" ]; then
+                      PLATFORM="linux/arm64"
+                    else
+                      PLATFORM="linux/amd64"
+                    fi
 
-                  echo "Testing $IMAGE_TAG on $PLATFORM"
+                    echo "Testing $IMAGE_TAG on $PLATFORM"
 
-                  docker run --rm --platform $PLATFORM \
-                    -v $GITHUB_WORKSPACE:/workspace \
-                    -w /workspace \
-                    $IMAGE_TAG bash ./centos-mirror-switcher.sh
+                    docker run --rm --platform $PLATFORM \
+                      -v $GITHUB_WORKSPACE:/workspace \
+                      -w /workspace \
+                      $IMAGE_TAG bash ./centos-mirror-switcher.sh

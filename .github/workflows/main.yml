@@ -40,8 +40,11 @@ jobs:
       - name: Run centos-mirror-switcher.sh
         run: |
           # 生成 CentOS 镜像标签
-          IMAGE_TAG="centos:${{ matrix.os }}"
-
+          if [ "${{ matrix.os }}" == "9" ]; then
+            IMAGE_TAG="quay.io/centos/centos:stream9"
+          else
+            IMAGE_TAG="centos:${{ matrix.os }}"
+          fi
           if [ "${{ matrix.arch }}" == "arm64" ]; then
             PLATFORM="linux/arm64"
           else
