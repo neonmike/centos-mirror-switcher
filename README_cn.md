@@ -60,3 +60,7 @@ Centos 现在已经很少见到这个包，关键是没有这个对应的依赖�
 **为什么不支持的 Centos steam 8 ？**
 
 CentOS Stream 8 没有发现依赖镜像地址
+
+## 网址
+
+https://www.lksr.net/2025/09/centos.html
