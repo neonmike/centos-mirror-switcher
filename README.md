@@ -1,62 +1,56 @@
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neonmike/centos-mirror-switcher/main.yml)
+Here is the polished English translation of your README:
+
+---
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neonmike/centos-mirror-switcher/main.yml)  
 ![GitHub Release](https://img.shields.io/github/v/release/neonmike/centos-mirror-switcher)
 
-# centos-mirror-switcher
+# CentOS Mirror Switcher
 
-## why ?
+## Why?
 
-Centos 版本没有官方包，各个镜像支持相对不太完善，整理和收集多个还在支持的镜像地址。
+Official CentOS repositories are no longer maintained for older versions, and third-party mirror support is inconsistent. This project collects and organizes multiple actively maintained mirror URLs to simplify repository configuration.
 
-## 脚本功能
+## Features
 
-一键直接修改软件园地址
+- One-click replacement of software repository URLs  
+- Supports **x86_64**: CentOS 5 / 6 / 7 / 8 and CentOS Stream 9  
+- Supports **ARM64 (aarch64)**: CentOS 6 / 7  
 
-支持 x86_64  5/6/7/8 和 stream 9
+> ⚠️ **Note**: This tool does **not** support `debuginfo` packages—handling those is outside the scope of this project.
 
-支持 arm64 6/7
+## Usage
 
-> 注意⚠️：不支持这一类debuginfo相关包，这不是这个项目的目的
-
-## 使用方法
-
-**海外用户**
-
+**For users outside mainland China:**
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/neonmike/centos-mirror-switcher/main/centos-mirror-switcher.sh)
 ```
-**国内用户**
+
+**For users in mainland China:**
 ```bash
-bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main/centos-mirror-switcher.sh) 
+bash <(curl -Ls https://cdn.jsdelivr.net/gh/neonmike/centos-mirror-switcher@main/centos-mirror-switcher.sh)
 ```
 
+## Supported Platforms
 
-## 脚本支持
+- **x86_64**: CentOS 5, 6, 7, 8, and CentOS Stream 9  
+- **ARM64**: CentOS 6, 7  
 
-x86_64: Centos 5/6/7/8 和 stream 9
-arm64: Centos 6/7
+## Mirror Sources Used
 
-## 项目依赖
+- Tsinghua University: https://mirrors.tuna.tsinghua.edu.cn/  
+- Alibaba Cloud: https://developer.aliyun.com/mirror/  
+- Tencent Cloud: https://mirrors.tencent.com/  
 
-- 依赖的镜像地址：
+## Project Progress
 
-    清华：https://mirrors.tuna.tsinghua.edu.cn/
+- ✅ Version 1: Initial implementation complete  
+- ✅ Version 2: Optimizations and improvements complete  
 
-    阿里：https://developer.aliyun.com/mirror/
+## FAQ
 
-    腾讯：https://mirrors.tencent.com/
+**Q: Why isn’t x86_32 (i386) supported?**  
+A: CentOS rarely provides i386 packages nowadays, and essential dependencies for those architectures are largely unavailable.
 
-## 进展
-
-第一版本构建完成 
-
-第二版本优化完成
-
-## 常见问题
-
-**为什么不支持 x86_32平台 ？**
-
-Centos 现在已经很少见到这个包，关键是没有这个对应的依赖库
-
-**为什么不支持的 Centos steam 8 ？**
-
-CentOS Stream 8 没有发现依赖镜像地址
+**Q: Why isn’t CentOS Stream 8 supported?**  
+A: At the time of development, no reliable or complete mirror sources for CentOS Stream 8 were identified among the supported repositories.
