@@ -12,15 +12,19 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-set -e
-PS4='+$LINENO:'
+set -e          #遇到错误就退出
+PS4='+$LINENO:' #行号
 
 os_name="UnknownOS"
 os_version="UnknownVersion"
 os_plat=$(uname -m)
 
+if [ "$(id -u)" -ne 0 ]; then
+	echo "Please switch to root to run the script."
+	exit 1
+fi
+
 sys_check() {
-	echo "权限检查......................................."
 	if [ -e /etc/os-release ]; then
 		. /etc/os-release # 读取系统发行版信息
 		os_name=${ID}
@@ -35,12 +39,10 @@ sys_check() {
 		echo "Unknown OS detected: os_name=$os_name, os_version=$os_version. Script exiting with status 1."
 		exit 1
 	fi
-	echo "检测系统名称：${os_name},系统版本：${os_version}..........."
-	if [ "$(id -u)" -ne 0 ]; then
-		echo "请切换为具有 sudo 权限的用户来开启脚本"
-		exit 1
-	fi
+
+	echo "System platform:$os_plat,SystemOS:$os_name,SystemVersion:$os_version."
 }
+
 set_stream9() {
 	mirrors="https://mirrors.tuna.tsinghua.edu.cn/centos-stream"
 	if [ $# -lt 1 ]; then
@@ -103,6 +105,7 @@ update_centos_othplat() {
 		curl -fSL -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-altarch-7.repo
 	else
 		echo " update centos failed ,Centos $1 ,version : $2 "
+		exit 1
 	fi
 }
 
@@ -136,12 +139,12 @@ update_centos_x86() {
 	elif [[ "$1" == "centos" && "$2" == "9" ]]; then
 		set_stream9 /etc/yum.repos.d/centos*.repo
 	else
-		echo "only support x86_64 centos 6/7/8 version , fail udpate centos software source "
+		echo "only support x86_64 centos 5/6/7/8 and centos stream 9 version , fail to udpate centos software source."
+		exit 1
 	fi
 }
 
 update_centos() {
-
 	if [[ "$1" == "x86_64" ]]; then
 		update_centos_x86 "$2" "$3"
 	else
@@ -154,3 +157,5 @@ sys_check
 update_centos "$os_plat" "$os_name" "$os_version"
 
 yum makecache
+
+echo "The CentOS software repository has been successfully updated."
