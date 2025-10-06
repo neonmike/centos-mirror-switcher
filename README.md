@@ -1,7 +1,3 @@
-Here is the polished English translation of your README:
-
----
-
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/neonmike/centos-mirror-switcher/main.yml)  
 ![GitHub Release](https://img.shields.io/github/v/release/neonmike/centos-mirror-switcher)
 
