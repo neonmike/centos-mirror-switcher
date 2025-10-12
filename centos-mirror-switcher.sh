@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #    Copyright 2025 CCK
 
 #    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,8 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
-set -e          #遇到错误就退出
+set -eo pipefail
+
 PS4='+$LINENO:' #行号
 
 os_name="UnknownOS"
